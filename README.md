@@ -1,5 +1,5 @@
 # NtHadouken
-## Este repositório foi concebido como um farol para orientar os corajosos aprendizes nos caminhos complexos dos Windows Internals e das explorações em ambientes Windows. Aqui, a busca pelo conhecimento é eterna, e a jornada para a maestria é interminável. Cada linha de código, cada artigo, cada link é uma peça valiosa nesse quebra-cabeça infinito do entendimento. A curiosidade é a chama que incendeia a mente. Isso é mais do que apenas hacking; é uma busca incansável pela verdade, pela compreensão, pela maestria. 
+# Este repositório foi concebido como um farol para orientar os corajosos aprendizes nos caminhos complexos dos Windows Internals e das explorações em ambientes Windows. Aqui, a busca pelo conhecimento é eterna, e a jornada para a maestria é interminável. Cada linha de código, cada artigo, cada link é uma peça valiosa nesse quebra-cabeça infinito do entendimento. A curiosidade é a chama que incendeia a mente. Isso é mais do que apenas hacking; é uma busca incansável pela verdade, pela compreensão, pela maestria. 
 
 ## Livros
 
@@ -48,4 +48,4 @@
 ## Windows Hacking
 - [Ired.Team](https://www.ired.team)
 
-# A chave para a liberdade está dentro de cada um de nós. Nós só precisamos ter coragem para encontrá-la.
+### A chave para a liberdade está dentro de cada um de nós. Nós só precisamos ter coragem para encontrá-la.
