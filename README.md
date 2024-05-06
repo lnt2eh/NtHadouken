@@ -3,10 +3,9 @@
 
 ## Livros
 
-- **Windows Internals, Part 1: System architecture, processes, threads, memory management, and more** - by Pavel Yosifovich, Alex Ionescu, Mark E. Russinovich, David A. Solomon
-- **Windows Internals, Part 2: Covering Windows Server 2008 R2 and Windows 7** - by Pavel Yosifovich, Alex Ionescu, Mark E. Russinovich, David A. Solomon
-- **Windows Internals, Part 1: System architecture, processes, threads, memory management, and more** - by Pavel Yosifovich, Alex Ionescu, Mark E. Russinovich, David A. Solomon
-
+- **Windows Internals, Part 1: System architecture, processes, threads, memory management, and more, 7th Edition** - By Pavel Yosifovich, Alex Ionescu, Mark E. Russinovich, David A. Solomon
+- **Windows Internals, Part 2, 7th Edition** - By Andrea Allievi, Mark E. Russinovich, Alex Ionescu, David A. Solomon
+- **Windows Kernel Programming Second Edition** - By Pavel Yosifovich
 ## Referências Técnicas
 
 - [Microsoft Docs - Windows Internals](https://docs.microsoft.com/en-us/windows/win32/sysinfo/about-windows-internals)
