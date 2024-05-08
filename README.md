@@ -32,7 +32,7 @@
 - [The DEFCON Warning System](https://www.defconwarningsystem.com/)
 - [Windows Kernel Explorer](https://blog.xpnsec.com/)
 - [MalwareTech Blog](https://www.malwaretech.com/)
-- [PatchGuard bypass at runtime]([https://www.malwaretech.com/](https://hexderef.com/patchguard-bypass)
+- [PatchGuard bypass at runtime](https://hexderef.com/patchguard-bypass)
 
 
 ## Comunidades e Fóruns
