@@ -44,5 +44,7 @@
 
 ## Windows Hacking
 - [Ired.Team](https://www.ired.team)
-
+  
+## Meus papers para iniciantes em NT Internals
+- [My-Papers](https://github.com/lnt0x80/My-Papers/blob/main/Paper-A-trip-to-nt!KiSystemCall64.pdf)
 ### A chave para a liberdade está dentro de cada um de nós. Nós só precisamos ter coragem para encontrá-la.
