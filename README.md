@@ -1,9 +1,9 @@
 # NtHadouken
-### Este repositório foi criado para orientar os corajosos aprendizes nos caminhos complexos dos Windows Internals e das explorações em ambientes Windows. Cada linha de código, cada artigo, cada link é uma peça valiosa. A curiosidade é a chama que incendeia a mente. Isso é mais do que apenas hacking; é uma busca incansável pela maestria.
+### Este repositório foi criado para orientar os corajosos aprendizes nos caminhos complexos dos Windows Internals. Cada linha de código, cada artigo, cada link é uma peça valiosa. A curiosidade é a chama que incendeia a mente. Isso é mais do que apenas hacking; é uma busca incansável pela maestria.
 
-## Meus papers para iniciantes em NT Internals
-- [My-Papers](https://github.com/lnt0x80/My-Papers/blob/main/Paper-A-trip-to-nt!KiSystemCall64.pdf)
-
+## Meus papers que desenvolvo para iniciantes em NT Internals, fiquem a vontade para estudar e retirar o máximo conhecimento possível.
+- [NtHadouken-Papers](https://github.com/lnt0x80/NtHadouken-Papers/blob/main)
+  
 ## Artigos e Blogs
 
 - [Blog do Mark Russinovich](https://techcommunity.microsoft.com/t5/windows-blog-archive/bg-p/WindowsInsidersBlog)
