@@ -1,20 +1,8 @@
 # NtHadouken
 ### Este repositório foi criado para orientar os corajosos aprendizes nos caminhos complexos dos Windows Internals e das explorações em ambientes Windows. Cada linha de código, cada artigo, cada link é uma peça valiosa. A curiosidade é a chama que incendeia a mente. Isso é mais do que apenas hacking; é uma busca incansável pela maestria.
 
-## Livros
-
-- **Windows Internals, Part 1: System architecture, processes, threads, memory management, and more, 7th Edition** - By Pavel Yosifovich, Alex Ionescu, Mark E. Russinovich, David A. Solomon
-- **Windows Internals, Part 2, 7th Edition** - By Andrea Allievi, Mark E. Russinovich, Alex Ionescu, David A. Solomon
-- **Windows Kernel Programming Second Edition** - By Pavel Yosifovich
-## Referências Técnicas
-
-- [Microsoft Docs - Windows Internals](https://docs.microsoft.com/en-us/windows/win32/sysinfo/about-windows-internals)
-- [Windows Internals Book - Official Site](https://www.microsoftpressstore.com/store/windows-internals-9780134855334)
-- [Sysinternals Suite](https://docs.microsoft.com/en-us/sysinternals/)
-- [Windows Dev Center](https://developer.microsoft.com/en-us/windows)
-
-## Ferramentas
-- [SysInternals](https://learn.microsoft.com/en-us/sysinternals/)
+## Meus papers para iniciantes em NT Internals
+- [My-Papers](https://github.com/lnt0x80/My-Papers/blob/main/Paper-A-trip-to-nt!KiSystemCall64.pdf)
 
 ## Artigos e Blogs
 
@@ -34,17 +22,29 @@
 - [MalwareTech Blog](https://www.malwaretech.com/)
 - [PatchGuard bypass at runtime](https://hexderef.com/patchguard-bypass)
 
-
 ## Comunidades e Fóruns
 
 - [r/WindowsInternals - Subreddit](https://www.reddit.com/r/WindowsInternals/)
 - [TechNet - Windows Internals Forum](https://social.technet.microsoft.com/Forums/en-US/home?category=windowsinternals)
 - [OSR Dev](https://community.osr.com/)
-- 
-
+  
 ## Windows Hacking
 - [Ired.Team](https://www.ired.team)
+
+## Livros
+
+- **Windows Internals, Part 1: System architecture, processes, threads, memory management, and more, 7th Edition** - By Pavel Yosifovich, Alex Ionescu, Mark E. Russinovich, David A. Solomon
+- **Windows Internals, Part 2, 7th Edition** - By Andrea Allievi, Mark E. Russinovich, Alex Ionescu, David A. Solomon
+- **Windows Kernel Programming Second Edition** - By Pavel Yosifovich
+## Referências Técnicas
+
+- [Microsoft Docs - Windows Internals](https://docs.microsoft.com/en-us/windows/win32/sysinfo/about-windows-internals)
+- [Windows Internals Book - Official Site](https://www.microsoftpressstore.com/store/windows-internals-9780134855334)
+- [Sysinternals Suite](https://docs.microsoft.com/en-us/sysinternals/)
+- [Windows Dev Center](https://developer.microsoft.com/en-us/windows)
+
+## Ferramentas
+- [SysInternals](https://learn.microsoft.com/en-us/sysinternals/)
+
   
-## Meus papers para iniciantes em NT Internals
-- [My-Papers](https://github.com/lnt0x80/My-Papers/blob/main/Paper-A-trip-to-nt!KiSystemCall64.pdf)
 ### A chave para a liberdade está dentro de cada um de nós. Nós só precisamos ter coragem para encontrá-la.
