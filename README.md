@@ -7,8 +7,6 @@
 ## Artigos e Blogs
 
 - [Blog do Mark Russinovich](https://techcommunity.microsoft.com/t5/windows-blog-archive/bg-p/WindowsInsidersBlog)
-- [Blog do Alex Ionescu](https://www.alex-ionescu.com/)
-- [Blog do Pavel Yosifovich](http://www.codemachine.com/)
 - [Matt Graeber's Blog](https://posts.specterops.io/@mattifestation)
 - [James Forshaw's Blog](https://tyranidslair.blogspot.com/)
 - [AdSecurity Blog](https://adsecurity.org/)
