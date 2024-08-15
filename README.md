@@ -1,7 +1,7 @@
 # NtHadouken - Uma viagem ao submundo do Windows Internals
 ### Este repositório foi criado para orientar os corajosos aprendizes nos caminhos complexos dos Windows Internals. Cada linha de código, cada artigo, cada link é uma peça valiosa. A curiosidade é a chama que incendeia a mente. Isso é mais do que apenas hacking; é uma busca incansável pela maestria.
 
-## Papers que desenvolvo para iniciantes em NT Internals, fiquem a vontade para estudar e retirar o máximo conhecimento possível.
+### Papers que desenvolvo para iniciantes em NT Internals, fiquem a vontade para estudar e retirar o máximo conhecimento possível.
 - [NtHadouken-Papers](https://github.com/lnt0x80/NtHadouken-Papers/tree/main/)
   
 ## Artigos e Blogs
@@ -30,12 +30,11 @@
 - [Ired.Team](https://www.ired.team)
 
 ## Livros
-
 - **Windows Internals, Part 1: System architecture, processes, threads, memory management, and more, 7th Edition** - By Pavel Yosifovich, Alex Ionescu, Mark E. Russinovich, David A. Solomon
 - **Windows Internals, Part 2, 7th Edition** - By Andrea Allievi, Mark E. Russinovich, Alex Ionescu, David A. Solomon
 - **Windows Kernel Programming Second Edition** - By Pavel Yosifovich
+  
 ## Referências Técnicas
-
 - [Microsoft Docs - Windows Internals](https://docs.microsoft.com/en-us/windows/win32/sysinfo/about-windows-internals)
 - [Windows Internals Book - Official Site](https://www.microsoftpressstore.com/store/windows-internals-9780134855334)
 - [Sysinternals Suite](https://docs.microsoft.com/en-us/sysinternals/)
@@ -43,6 +42,4 @@
 
 ## Ferramentas
 - [SysInternals](https://learn.microsoft.com/en-us/sysinternals/)
-
-  
 ### A chave para a liberdade está dentro de cada um de nós. Nós só precisamos ter coragem para encontrá-la.
