@@ -9,10 +9,6 @@ Este projeto é dedicado a compartilhar papers que desenvolvemos para ajudar ini
 
 1. [Paper-A-Trip-to-nt!KiSystemCall64](https://github.com/lnt2eh/NtHadouken/blob/main/Papers/Paper-A-trip-to-nt!KiSystemCall64.pdf).
 
-## Contribuições
-
-Contribuições são bem-vindas! Se você tem sugestões, correções ou novos tópicos que gostaria de ver abordados, sinta-se à vontade para mandar-me um e-mail: int0x80.c@gmail.com.
-
 ## Artigos e Blogs
 
 - [Blog do Mark Russinovich](https://techcommunity.microsoft.com/t5/windows-blog-archive/bg-p/WindowsInsidersBlog)
