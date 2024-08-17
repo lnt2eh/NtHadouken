@@ -8,7 +8,7 @@ O objetivo deste repositório é fornecer materiais educativos aprofundados sobr
 
 ## Papers Disponíveis
 
-1. [Paper-A-Trip-to-nt!KiSystemCall64](https://github.com/lnt0x80/NtHadouken-Papers/blob/main/Papers/Paper-A-trip-to-nt!KiSystemCall64.pdf).
+1. [Paper-A-Trip-to-nt!KiSystemCall64](https://github.com/lnt2eh/NtHadouken/blob/main/Papers/Paper-A-trip-to-nt!KiSystemCall64.pdf).
 
 ## Contribuições
 
