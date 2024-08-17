@@ -1,5 +1,5 @@
 # NtHadouken - Uma viagem ao submundo do Windows Internals
-![Logo](https://imgur.com/a/IP7DuB6)
+
 ### Este repositório foi criado para orientar os corajosos aprendizes nos caminhos complexos dos Windows Internals. Cada linha de código, cada artigo, cada link é uma peça valiosa. A curiosidade é a chama que incendeia a mente. Isso é mais do que apenas hacking; é uma busca incansável pela maestria.
 
 ## NtHadouken Papers
