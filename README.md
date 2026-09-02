@@ -109,6 +109,8 @@ NtHadouken/
 │
 ├── Tutorials/
 │   │
+│   ├── Beginner/
+│   │
 │   ├── PowerShell/
 │   │   └── CursoPowerShell.md
 │   │
@@ -129,6 +131,8 @@ NtHadouken/
 │   ├── Reverse-Engineering/
 │   │   ├── Reversing-NtDLL.md
 │   │   └── Hooking-SSDT.md
+│   │
+│   ├── Virtualization/
 │   │
 │   └── Misc/
 │       └── Writing-Kernel-Exploits.md
