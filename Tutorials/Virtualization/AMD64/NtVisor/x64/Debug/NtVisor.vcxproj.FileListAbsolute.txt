@@ -1,2 +1,0 @@
-C:\Users\_int2Eh\Desktop\Research\NtHadouken\Tutorials\Virtualization\NtVisor\x64\Debug\NtVisor.sys
-C:\Users\_int2Eh\Desktop\NtVisor\x64\Debug\NtVisor.sys
