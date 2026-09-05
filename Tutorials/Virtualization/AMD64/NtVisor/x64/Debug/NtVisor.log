@@ -1,0 +1,10 @@
+﻿  Building 'NtVisor' with toolset 'WindowsKernelModeDriver10.0' and the 'Universal' target platform.
+  NtVisor.vcxproj -> C:\Users\_int2Eh\Desktop\NtVisor\x64\Debug\NtVisor.sys
+  Done Adding Additional Store
+  Successfully signed: C:\Users\_int2Eh\Desktop\NtVisor\x64\Debug\NtVisor.sys
+  
+  Driver is 'Universal'.
+  Inf2Cat task was skipped as there were no inf files to process
+  
+  DrvCat task was skipped as there was no catalog file to process
+  
