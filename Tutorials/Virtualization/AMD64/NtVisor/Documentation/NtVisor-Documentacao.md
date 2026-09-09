@@ -2,9 +2,13 @@
 
 **Projeto:** NtHadouken
 **Componente principal:** NtVisor (driver de kernel)
+
 **Autor / Mantenedor:** Matheus Santos (_int2Eh)
+
 **Categoria:** Pesquisa acadêmica em virtualização assistida por hardware
+
 **Tema de pesquisa:** AMD SVM VMRUN — Abstração Intrínseca e Controle Arquitetural
+
 **Status:** Não destinado a uso em produção
 
 **Versão do documento:** 1.0
