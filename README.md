@@ -1,196 +1,73 @@
 # NtHadouken
 
-<p align="center">
-  <img src="https://github.com/lnt2eh/NtHadouken/blob/main/assets/UpdateLogo.png" />
-</p>
+**Windows internals · Kernel development · Reverse engineering · Low-level security research**
 
-## About
+NtHadouken is a personal research repository maintained by Matheus Santos. It documents experiments, technical notes and practical work focused on understanding Windows internals and the mechanisms beneath the operating system's user-facing abstractions.
 
-NtHadouken is a personal research repository focused on Windows Internals, low-level development, reverse engineering and Windows kernel development.
+The repository is a learning and research workspace. Code and experiments are provided as-is and are **not intended for production use**.
 
-The repository contains technical papers, experiments, source code, tools and references created or collected during my studies.
+## Research areas
 
-The goal is simple: document what I am learning and build a structured knowledge base around the internal components of the Windows operating system.
+- Windows architecture and internals
+- Processes, threads and memory management
+- System calls and kernel data structures
+- Windows drivers and kernel-mode development
+- WinDbg and kernel debugging
+- Reverse engineering
+- AMD64 architecture and hardware-assisted virtualization
+- Security mechanisms and low-level experimentation
 
-Topics covered throughout the repository include:
+## Technical papers
 
-* Windows Internals
-* Kernel Development
-* Windows Drivers
-* Debugging
-* Reverse Engineering
-* Windows Architecture
-* Memory Management
-* Thread and Process Internals
-* Low-level Security Research
+The papers below are individual study notes. Some are introductory and may contain version-specific observations; consult primary documentation before relying on implementation details.
 
-This repository is constantly evolving as new research, experiments and documentation are added.
+| Topic | Paper |
+|---|---|
+| System-call path | [nt!KiSystemCall64](Papers/nt!KiSystemCall64.md) |
+| Processor control region | [Windows KPCR](Papers/Windows-KPCR.md) |
+| Interrupt handling | [Interrupt Descriptor Table](Papers/Windows-IDT.md) |
+| Kernel data structures | [Kernel Structures](Papers/KernelStructs.md) |
+| Process environment | [PEB](Papers/PEB.md) |
+| Thread environment | [TEB](Papers/TEB.md) |
+| Process instrumentation | [NtGlobalFlag](Papers/NtGlobalFlag.md) |
+| x64 calling convention | [Shadow Space](Papers/ShadowSpace.md) |
 
----
+## Tutorials and experiments
 
-## Technical Papers
+The `Tutorials/` and `src/` directories contain practical material, including debugging, drivers, PowerShell, reverse engineering and virtualization research.
 
-The `Papers` directory contains technical articles focused on specific Windows internals and low-level mechanisms.
+The AMD SVM / NtVisor work is documented under:
 
-### Available Papers
+`Tutorials/Virtualization/AMD64/NtVisor/`
 
-* [`nt!KiSystemCall64`](Papers/nt!KiSystemCall64.md)
-* [`KPCR - Kernel Processor Control Region`](Papers/Windows-KPCR.md)
-* [`IDT - Interrupt Descriptor Table`](Papers/Windows-IDT.md)
-* [`Kernel Structures`](Papers/KernelStructs.md)
-* [`NtGlobalFlag`](Papers/NtGlobalFlag.md)
-* [`PEB - Process Environment Block`](Papers/PEB.md)
-* [`TEB - Thread Environment Block`](Papers/TEB.md)
-* [`Shadow Space`](Papers/ShadowSpace.md)
+Start with the project documentation in that directory for its scope, implementation notes, limitations and references.
 
-## Resources
+## Working principles
 
-### Articles and Blogs
+Research notes should distinguish between:
 
-* [Mark Russinovich Blog](https://learn.microsoft.com/en-us/archive/blogs/markrussinovich/)
-* [Matt Graeber](https://www.exploit-monday.com/)
-* [James Forshaw](https://tyranidslair.blogspot.com/)
-* [AdSecurity](https://adsecurity.org/)
-* [CERT/CC](https://www.kb.cert.org/vuls/)
-* [The Old New Thing](https://devblogs.microsoft.com/oldnewthing/)
-* [Hexacorn](http://www.hexacorn.com/blog/)
-* [Didier Stevens](https://blog.didierstevens.com/)
-* [Oddvar Moe](https://oddvarmoe.no/)
-* [Windows Kernel Explorer](https://github.com/wke/wke)
+- **Observed:** directly reproduced or measured behavior.
+- **Inferred:** an explanation supported by observations but not yet independently established.
+- **Confirmed:** a conclusion supported by reproducible evidence and appropriate references.
 
-### Communities
+Prefer primary sources, record the tested environment, preserve negative results and avoid presenting undocumented, version-dependent implementation details as stable interfaces.
 
-* [r/WindowsInternals](https://www.reddit.com/r/WindowsInternals/)
-* [OSR](https://www.osr.com/)
-* [Windows Hacking - ired.team](https://www.ired.team/)
+## References
 
-### Books
+- [Microsoft Learn — Windows drivers](https://learn.microsoft.com/windows-hardware/drivers/)
+- [Microsoft Learn — WinDbg](https://learn.microsoft.com/windows-hardware/drivers/debugger/)
+- [Windows Internals](https://windows-internals.com/)
+- [AMD64 Architecture Programmer's Manual](https://docs.amd.com/v/u/en-US/24593_3.45_APM_Vol2_PUB)
+- [Intel Software Developer's Manuals](https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html)
 
-* *Windows Internals, Part 1* — Pavel Yosifovich, Alex Ionescu, Mark Russinovich, David Solomon
-* *Windows Internals, Part 2* — Andrea Allievi, Mark Russinovich, Alex Ionescu, David Solomon
-* *Windows Kernel Programming* — Pavel Yosifovich
+## Contributing
 
-### Technical References
-
-* [Microsoft Windows Driver Documentation](https://learn.microsoft.com/en-us/windows-hardware/drivers/)
-* [Windows Internals Book](https://windows-internals.com/)
-* [Sysinternals](https://learn.microsoft.com/en-us/sysinternals/)
-* [Windows Developer Center](https://developer.microsoft.com/en-us/windows)
-
-### Tools
-
-* [Sysinternals](https://learn.microsoft.com/en-us/sysinternals/)
-* [Windows Kernel Explorer](https://github.com/wke/wke)
-* [x64dbg](https://x64dbg.com/)
-* [WinDbg](https://learn.microsoft.com/en-us/windows-hardware/drivers/debugger/)
-
----
-
-## Repository Structure
-
-```text
-NtHadouken/
-│
-├── README.md
-│
-├── assets/
-│   └── NtHadouken.png
-│
-├── Papers/
-│   ├── A-Trip-to-ntKiSystemCall64.md
-│   ├── KPCR.md
-│   ├── ShadowSpace.md
-│   ├── TEB.md
-│   └── PEB.md
-│
-├── docs/
-│   ├── index.md
-│   └── how-to-contribute.md
-│
-├── Tutorials/
-│   │
-│   ├── Beginner/
-│   │
-│   ├── PowerShell/
-│   │   └── CursoPowerShell.md
-│   │
-│   ├── Drivers/
-│   │   ├── Setting-up-environment-for-creating-Windows-drivers.md
-│   │   └── ...
-│   │
-│   ├── Debugging/
-│   │   ├── Set-up-KDNET-network-kernel-debugging-automatically.md
-│   │   ├── Analyzing-BSOD-with-WinDBG.md
-│   │   ├── Extracting-Syscalls.md
-│   │   └── Debugging-Kernel-Drivers.md
-│   │
-│   ├── Windows-Internals/
-│   │   ├── Thread-Scheduling.md
-│   │   └── Understanding-Paging.md
-│   │
-│   ├── Reverse-Engineering/
-│   │   ├── Reversing-NtDLL.md
-│   │   └── Hooking-SSDT.md
-│   │
-│   ├── Virtualization/
-│   │
-│   └── Misc/
-│       └── Writing-Kernel-Exploits.md
-│
-├── src/
-│   │
-│   ├── drivers/
-│   │   ├── basic/
-│   │   │   ├── HelloWorldDriver/
-│   │   │   └── SimpleDeviceDriver/
-│   │   │
-│   │   ├── security/
-│   │   │   ├── KernelKeylogger/
-│   │   │   └── ProcessHider/
-│   │   │
-│   │   ├── debugging/
-│   │   │   ├── KernelDebugger/
-│   │   │   └── BSODTrigger/
-│   │   │
-│   │   └── memory/
-│   │       ├── KernelMemoryScanner/
-│   │       └── VirtualMemoryMonitor/
-│   │
-│   └── tools/
-│
-├── CONTRIBUTING.md
-└── LICENSE
-```
-
----
-
-## Roadmap
-
-* [x] Publish technical papers related to Windows Internals
-* [x] Build a collection of technical references
-* [x] Improve repository organization
-* [ ] Add additional Windows Internals papers
-* [ ] Expand the driver development section
-* [ ] Add debugging and reverse engineering experiments
-* [ ] Develop small tools for research and debugging
-* [ ] Improve the project documentation
-
----
-
-## Contributions
-
-Contributions, corrections and technical discussions are welcome.
-
-If you find an error in one of the papers or have suggestions for improving the documentation, feel free to open an issue or submit a pull request.
-
----
+Corrections, reproducible findings and technical discussion are welcome. Please include references, tested environment, reproduction steps and known limitations when proposing technical changes.
 
 ## Maintainer
 
-**Matheus Santos**
-
-GitHub: [@lnt2Eh](https://github.com/lnt2Eh)
+**Matheus Santos** · [@lnt2eh](https://github.com/lnt2eh)
 
 ---
 
-This repository is maintained as a personal research and learning project. Content may change as the research evolves and previous material may be updated when new information becomes available.
+*Research. Build. Investigate.*
