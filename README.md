@@ -32,15 +32,15 @@ The papers below are individual study notes. Some are introductory and may conta
 | Process instrumentation | [NtGlobalFlag](Papers/NtGlobalFlag.md) |
 | x64 calling convention | [Shadow Space](Papers/ShadowSpace.md) |
 
+## Featured research: AMD SVM / NtVisor
+
+The [NtVisor technical documentation](Tutorials/Virtualization/AMD64/NtVisor/Documentation/NtVisor-Documentacao.md) describes an experimental Windows kernel driver that explores AMD Secure Virtual Machine (SVM), VMCB setup, VM exits and guest/host state transitions.
+
+This is a proof of concept, not a complete hypervisor. The documentation records known limitations, including the absence of nested paging and the lack of guest/host memory isolation. Do not run kernel experiments on a machine containing data you cannot afford to lose.
+
 ## Tutorials and experiments
 
 The `Tutorials/` and `src/` directories contain practical material, including debugging, drivers, PowerShell, reverse engineering and virtualization research.
-
-The AMD SVM / NtVisor work is documented under:
-
-`Tutorials/Virtualization/AMD64/NtVisor/`
-
-Start with the project documentation in that directory for its scope, implementation notes, limitations and references.
 
 ## Working principles
 
