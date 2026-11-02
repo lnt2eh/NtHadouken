@@ -52,9 +52,7 @@ A estrutura `KUSER_SHARED_DATA` é uma estrutura utilizada para que o kernel com
 
 Em Windows x64, a área de user mode de `KUSER_SHARED_DATA` é normalmente mapeada em `0x7FFE0000`; o alias de kernel é `0xFFFFF78000000000`. O campo `SystemCall`, no offset `0x308` em versões modernas do Windows x64, é consultado pelo stub de syscall da `ntdll`. Quando o bit relevante está limpo (valor normalmente observado como zero), o stub segue pela instrução `SYSCALL`. Quando está setado, o stub pode selecionar o caminho legado `INT 2Eh`. Portanto, esse campo não indica se o sistema é x86 ou x64: ele seleciona o mecanismo de transição usado pelo stub em um sistema x64. O layout e o uso desses campos são dependentes da versão do Windows; confirme-os com símbolos e disassembly da build analisada.
 
-Ainda sobre a estrutura, de acordo com a documentação da Microsoft, o campo `SystemCall` é, em x64, inicializado para um valor diferente de zero se o sistema operar com uma exibição alterada do mecanismo de chamada de serviço do sistema.
-
-Em x64, o membro `SystemCall` da estrutura `KUSER_SHARED_DATA` indica o mecanismo de chamadas de sistema em uso e é configurado com um valor diferente de zero, refletindo que o sistema está utilizando o modelo baseado em instruções otimizadas, como syscall. Em sistemas x86, esse membro permanece como zero, indicando que o modelo tradicional de chamadas de sistema, como `int 2Eh` ou `sysenter`, está em uso.
+O valor desse campo não deve ser interpretado como um indicador da arquitetura do sistema. Em Windows x64, ele funciona como seletor do caminho de transição usado pelo stub de syscall. A interpretação deve ser feita junto do disassembly da `ntdll` e da versão específica do Windows; estruturas internas e seus campos podem mudar entre builds.
 
 Quando a instrução syscall é executada, o valor de `IA32_LSTAR` é recuperado e colocado no registrador `RIP` do kernel. Chamamos isso de Kernel RIP Syscall. Após isso, o modo kernel passa a executar o manipulador de syscall `nt!KiSystemCall64`.
 
