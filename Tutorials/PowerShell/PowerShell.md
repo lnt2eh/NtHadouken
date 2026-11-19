@@ -1,235 +1,214 @@
+# PowerShell Mini-Course - NtHadouken
 
-# Mini Curso de PowerShell - NtHadouken
+## Introduction to PowerShell
 
-## Introdução ao PowerShell
+**PowerShell** is a powerful automation and command-line language developed by Microsoft and based on the .NET framework. It provides advanced features for system administration, file manipulation, and network management, and is widely used by IT professionals, system administrators, and automation enthusiasts.
 
-O **PowerShell** é uma poderosa linguagem de automação e linha de comando desenvolvida pela Microsoft, baseada no framework .NET. Ele oferece funcionalidades avançadas para administração de sistemas, manipulação de arquivos e gerenciamento de redes, sendo amplamente utilizado por profissionais de TI, administradores de sistemas e entusiastas da automação.
+Unlike Command Prompt (cmd), PowerShell works with **objects** rather than plain text, enabling more complex and efficient operations. It also supports CMD commands, making the transition between the tools easier.
 
-Diferente do Prompt de Comando (cmd), o PowerShell trabalha com **objetos** em vez de simples texto, o que permite realizar operações mais complexas e eficientes. Ele também suporta comandos do CMD, tornando a transição entre as ferramentas mais simples.
+### **Note: This is not a complete course. It is a mini-course covering introductory PowerShell concepts, from basic commands to intermediate topics that can be applied to development and automation. If you are looking for a deeper understanding, keep exploring and practicing the concepts presented here.**
 
-### **Nota: Este não é um curso completo. Trata-se de um mini curso com conceitos iniciais do PowerShell, abordando desde comandos básicos até aspectos intermediários que podem ser aplicados no desenvolvimento e na automação. Se você procura um aprendizado mais profundo, continue explorando e praticando os conceitos que aqui são apresentados.**
-----------
+---
 
-## O que são Cmdlets?
+## What Are Cmdlets?
 
-Os **Cmdlets** são comandos internos do PowerShell, projetados para realizar operações específicas. Eles seguem o formato **Verbo-Substantivo**, o que facilita a leitura e compreensão dos comandos.
+**Cmdlets** are built-in PowerShell commands designed to perform specific operations. They follow the **Verb-Noun** format, which makes commands easier to read and understand.
 
-Exemplo:
+Example:
 
 ```powershell
 Get-Command -CommandType Cmdlet
-
 ```
 
-Alguns cmdlets comuns incluem:
+Some common cmdlets include:
 
--   **Get-Help** – Obtém ajuda sobre um comando.
--   **Get-Command** – Lista comandos disponíveis.
--   **Get-Service** – Mostra serviços do sistema.
--   **Stop-Service** – Para um serviço em execução.
+- **Get-Help** – Gets help about a command.
+- **Get-Command** – Lists available commands.
+- **Get-Service** – Displays system services.
+- **Stop-Service** – Stops a running service.
 
-### Obtendo Ajuda
+### Getting Help
 
-Antes de usar um cmdlet, é recomendável verificar sua documentação:
+Before using a cmdlet, it is recommended that you check its documentation:
 
 ```powershell
-Get-Help NomeDoCmdlet
-
+Get-Help CmdletName
 ```
 
-Para atualizar a base de dados de ajuda:
+To update the help database:
 
 ```powershell
 Update-Help
-
 ```
 
-----------
+---
 
-## Cmdlets, Funções e Alias
+## Cmdlets, Functions, and Aliases
 
-1.  **Cmdlets:** Comandos embutidos no PowerShell.
-    
-    ```powershell
-    Get-Command -CommandType Cmdlet
-    
-    ```
-    
-2.  **Funções:** Blocos de código reutilizáveis.
-    
-    ```powershell
-    Get-Command -CommandType Function
-    
-    ```
-    
-3.  **Alias:** Apelidos para comandos mais longos.
-    
-    ```powershell
-    Get-Command -CommandType Alias
-    
-    ```
-    
-    Criando um alias personalizado:
-    
-    ```powershell
-    Set-Alias limpar Clear-Host
-    
-    ```
-    
+1. **Cmdlets:** Commands built into PowerShell.
 
-----------
+   ```powershell
+   Get-Command -CommandType Cmdlet
+   ```
 
-## Controle de Exibição
+2. **Functions:** Reusable blocks of code.
 
-### Redirecionadores:
+   ```powershell
+   Get-Command -CommandType Function
+   ```
 
--   **`|`** – Passa a saída de um comando para outro.
--   **`>`** – Redireciona saída para um arquivo (substitui conteúdo).
--   **`>>`** – Anexa a saída em um arquivo existente.
--   **`2>`** – Redireciona erros para um arquivo.
--   **`2>>`** – Anexa erros em um arquivo.
--   **`2>&1`** – Redireciona erros para a saída padrão.
+3. **Aliases:** Short names for longer commands.
 
-Exemplo:
+   ```powershell
+   Get-Command -CommandType Alias
+   ```
+
+   Creating a custom alias:
+
+   ```powershell
+   Set-Alias clear-screen Clear-Host
+   ```
+
+---
+
+## Output Control
+
+### Redirection Operators
+
+- **`|`** – Passes the output of one command to another.
+- **`>`** – Redirects output to a file (overwriting its contents).
+- **`>>`** – Appends output to an existing file.
+- **`2>`** – Redirects errors to a file.
+- **`2>>`** – Appends errors to a file.
+- **`2>&1`** – Redirects errors to standard output.
+
+Example:
 
 ```powershell
-Get-Process | Out-File "processos.txt"
-
+Get-Process | Out-File "processes.txt"
 ```
 
-----------
+---
 
-## Filtrando Resultados com Where-Object
+## Filtering Results with Where-Object
 
-Para filtrar saídas, usamos **Where-Object**:
+To filter output, use **Where-Object**:
 
 ```powershell
 Get-ChildItem | Where-Object {$_.Mode -like "*a*"}
-
 ```
 
-### Operadores de Comparação
+### Comparison Operators
 
--   `-lt` (Menor que)
--   `-le` (Menor ou igual)
--   `-gt` (Maior que)
--   `-ge` (Maior ou igual)
--   `-eq` (Igual)
--   `-ne` (Diferente de)
--   `-like` (Permite Wildcards)
+- `-lt` (Less than)
+- `-le` (Less than or equal to)
+- `-gt` (Greater than)
+- `-ge` (Greater than or equal to)
+- `-eq` (Equal to)
+- `-ne` (Not equal to)
+- `-like` (Supports wildcards)
 
-----------
+---
 
-## Módulos no PowerShell
+## PowerShell Modules
 
-Os módulos adicionam funcionalidades ao PowerShell.
+Modules add functionality to PowerShell.
 
--   Listar módulos disponíveis:
-    
-    ```powershell
-    Get-Module -ListAvailable
-    
-    ```
-    
--   Instalar um módulo:
-    
-    ```powershell
-    Install-Module -Name NomeDoModulo
-    
-    ```
-    
--   Importar um módulo:
-    
-    ```powershell
-    Import-Module NomeDoModulo
-    
-    ```
-    
+- List available modules:
 
-----------
+  ```powershell
+  Get-Module -ListAvailable
+  ```
 
-## Variáveis no PowerShell
+- Install a module:
 
-Variáveis armazenam dados temporários:
+  ```powershell
+  Install-Module -Name ModuleName
+  ```
+
+- Import a module:
+
+  ```powershell
+  Import-Module ModuleName
+  ```
+
+---
+
+## Variables
+
+Variables store temporary data:
 
 ```powershell
-$nome = "NtHadouken"
-Write-Host "Bem-vindo, $nome"
-
+$name = "NtHadouken"
+Write-Host "Welcome, $name"
 ```
 
-----------
+---
 
 ## Arrays
 
-Os arrays armazenam coleções de dados indexados.
+Arrays store indexed collections of data.
 
 ```powershell
-$array = @("Pedro", "Maria", "João")
-
+$array = @("Peter", "Mary", "John")
 ```
 
-Acessando elementos:
+Accessing elements:
 
 ```powershell
-$array[0]  # Retorna "Pedro"
-
+$array[0]  # Returns "Peter"
 ```
 
-----------
+---
 
 ## Hash Tables
 
-As Hash Tables armazenam pares chave-valor.
+Hash tables store key-value pairs.
 
 ```powershell
-$equipamentos = @{Server1 = "192.168.2.1"; Router = "192.168.2.254"}
-
+$devices = @{Server1 = "192.168.2.1"; Router = "192.168.2.254"}
 ```
 
-Adicionar e remover valores:
+Adding and removing values:
 
 ```powershell
-$equipamentos["Server2"] = "192.168.1.10"
-$equipamentos.Remove("Server1")
-
+$devices["Server2"] = "192.168.1.10"
+$devices.Remove("Server1")
 ```
 
-Exemplo de script utilizando Hash Table:
+Example script using a hash table:
 
 ```powershell
 Clear-Host
-$equipamentos = [ordered] @{Server1="192.168.2.1"; Router="192.168.2.254"}
-$equipamentos["Loopback"]="127.0.0.1"
-Test-Connection $equipamentos.Router -Count 1
-$equipamentos.Values
-
+$devices = [ordered] @{Server1="192.168.2.1"; Router="192.168.2.254"}
+$devices["Loopback"]="127.0.0.1"
+Test-Connection $devices.Router -Count 1
+$devices.Values
 ```
 
-----------
+---
 
 ## Select-String
 
-O **Select-String** busca padrões dentro de arquivos:
+**Select-String** searches for patterns within files:
 
 ```powershell
-Get-Content "log.txt" | Select-String "Erro"
-
+Get-Content "log.txt" | Select-String "Error"
 ```
 
-Ou:
+Or:
 
 ```powershell
-Select-String -Path "log.txt" -Pattern "Erro"
-
+Select-String -Path "log.txt" -Pattern "Error"
 ```
 
-----------
+---
 
 ## IF-ELSE
-Controle de fluxo de operação do script via condições
 
-Exemplo de utilização:
+Use conditional statements to control script execution.
+
+Example:
 
 ```powershell
 Clear-Host
@@ -237,87 +216,82 @@ $service = Get-Service -Name spooler
 
 if ($service.Status -eq "Running")
 {
-Write-Host "Serviço em execução"
+    Write-Host "Service is running"
 }
-
 else
 {
-Write-Host "Serviço parado"
+    Write-Host "Service is stopped"
 }
-
 ```
 
-## Looping
--   For
-    
-    for(Inicio; condição; proximo valor)
-    
-    {
-    
-    Código de repetição
-    
-    }
-    
--   FOREACH
-    
-	   ForEach($variavel e itens da coleção)
-    
-    {
-    
-	    Código de repetição
-    
-    }
-    
--   While
-    
-    While(Condição)
-    
-    {
-    
-		   Código de repetição
-    
-    }
-    
+## Loops
 
-### Script exemplar:
+- **For**
+
+  ```powershell
+  for(initialization; condition; next value)
+  {
+      Repeated code
+  }
+  ```
+
+- **FOREACH**
+
+  ```powershell
+  ForEach($variable in collection items)
+  {
+      Repeated code
+  }
+  ```
+
+- **While**
+
+  ```powershell
+  While(condition)
+  {
+      Repeated code
+  }
+  ```
+
+### Example Script
 
 ```powershell
-# Exemplo comando FOR
+# FOR loop example
 
 Clear-Host
 $conn = 0
-$falhas = 0
+$failures = 0
 $success = 0
 
 for($counter=1; $counter -le 1; $counter++)
 {
-    Write-Host "Pingando para 192.168.2.$counter"
+    Write-Host "Pinging 192.168.2.$counter"
     $conn = Test-Connection 192.168.1.$counter -Quiet
     if($conn -eq "true")
     {
-        Write-Host "A conexao para 192.168.2.$counter foi realizada" -ForegroundColor Green
+        Write-Host "The connection to 192.168.2.$counter succeeded" -ForegroundColor Green
         $success++
     }
     else
     {
-        Write-Host "A conexao para 192.168.2.$counter falhou" -ForegroundColor Yellow
-        $falhas++
+        Write-Host "The connection to 192.168.2.$counter failed" -ForegroundColor Yellow
+        $failures++
     }
 }
-Write-Host "O total de sucesso foi $success" -ForegroundColor Green
-Write-Host "Total de falhas: $falhas" -ForegroundColor Yellow
+Write-Host "Total successful connections: $success" -ForegroundColor Green
+Write-Host "Total failures: $failures" -ForegroundColor Yellow
 
-# Exemplo de FOREACH
-Write-Host 
-foreach($arquivos in Get-Process)
+# FOREACH example
+Write-Host
+foreach($files in Get-Process)
 {
-    if($arquivos.ProcessName -like "Notepad*")
+    if($files.ProcessName -like "Notepad*")
     {
-        Write-Host Processo $arquivos.ProcessName.ToUpper() "aberto" -ForegroundColor Yellow
+        Write-Host Process $files.ProcessName.ToUpper() "is open" -ForegroundColor Yellow
     }
 }
 
-# Exemplo usando WHILE
+# WHILE example
 
 Write-Host
 $i = 0
@@ -326,62 +300,65 @@ while($i -le 5)
     Write-Host $i
     $i++
 }
-
 ```
-## Funções
-Funções são comandos em um script que dura apenas durante a sessão em que estiver sendo executado.
 
--   Longos comandos.
--   Tarefas repetidas
--   Uso de parâmetros
+## Functions
 
-## Exemplo:
+Functions are commands in a script that remain available only for the duration of the session in which the script is running.
+
+- Long commands.
+- Repeated tasks.
+- Use of parameters.
+
+## Example
 
 ```powershell
-Function somar
+Function Add-Numbers
 {
     param($a, $b)
-    $resultado = $a + $b
-    Write-Host $resultado
+    $result = $a + $b
+    Write-Host $result
 }
-
 ```
+
 ## Workflows
-Criação de scripts de longa execução gerenciáveis
 
-Pode ser utilizado para
+Workflows allow you to create and manage long-running scripts.
 
--   Interromper
--   Suspender
--   Reiniciar
--   Repetir
--   Execução paralela
+They can be used to:
 
-Para utilização com máquinas remotas, é importante a utilização de “Write-Output” pois, o cmdlet “Write-Host” imprime diretamente no host interativo e não em host remoto.
+- Stop
+- Suspend
+- Restart
+- Repeat
+- Execute tasks in parallel
 
-## New-Objects com WScript.Shell
-## WScriptShell
+When working with remote machines, it is important to use `Write-Output` because the `Write-Host` cmdlet prints directly to the interactive host rather than to a remote host.
 
-Você pode usar New-Object para trabalhar com componentes COM(Component Object Model). Os componentes variam desde as várias bibliotecas incluídas no WSH(Windows Script Host) até os aplicativos de ActiveX como o Internet Explorer.
+## New-Object with WScript.Shell
 
--   New-Object -ComObject WScript.Shell
--   New-Object -ComObject WScript.Network
--   New-Object -ComObject Scripting.Dictionary
--   New-Object -ComObject Scripting.FileSystemObject
+### WScript.Shell
 
-## Exemplo
+You can use New-Object to work with COM (Component Object Model) components. These components range from the various libraries included in WSH (Windows Script Host) to ActiveX applications such as Internet Explorer.
+
+- New-Object -ComObject WScript.Shell
+- New-Object -ComObject WScript.Network
+- New-Object -ComObject Scripting.Dictionary
+- New-Object -ComObject Scripting.FileSystemObject
+
+## Example
 
 ```powershell
 $wshell = New-Object -ComObject WScript.Shell
 
 $wshell | Get-Member
 
-$wshell.Popup("NtHadouken", 0, "PowerShell", 0x1) 
+$wshell.Popup("NtHadouken", 0, "PowerShell", 0x1)
 
 $wshell.Run("cmd")
 $wshell.AppActivate("Notepad")
 Start-Sleep -Seconds 2
 $wshell.SendKeys("echo NtHadouken ~")
-
 ```
-Este mini curso apresenta os conceitos fundamentais do PowerShell. Ele serve como um ponto de partida para você explorar o potencial dessa ferramenta incrível. Continue praticando e experimentando diferentes cmdlets para aprofundar seu conhecimento!
+
+This mini-course introduces the fundamental concepts of PowerShell. It serves as a starting point for exploring the potential of this powerful tool. Keep practicing and experimenting with different cmdlets to deepen your knowledge!
