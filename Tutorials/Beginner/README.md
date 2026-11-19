@@ -1,48 +1,49 @@
-# Windows Beginner
+# Windows for Beginners
 
-Esta seção do NtHadouken é voltada para estudos e conteúdos introdutórios sobre o funcionamento do Windows.
+This section of NtHadouken is dedicated to introductory material about how Windows works.
 
-A ideia é reunir materiais que sirvam como ponto de partida para quem deseja entender melhor o sistema operacional antes de avançar para assuntos como Windows Internals, desenvolvimento de drivers, kernel e reverse engineering.
+The goal is to gather resources for readers who want to understand the operating system before moving on to topics such as Windows Internals, driver development, the kernel, and reverse engineering.
 
-Os conteúdos aqui não têm o objetivo de explicar apenas conceitos de forma teórica. Sempre que possível, os estudos serão acompanhados de exemplos práticos e experimentos.
+The material is not intended to explain concepts only in theory. Whenever possible, topics will be accompanied by practical examples and experiments.
 
-## Objetivo
+## Objective
 
-Windows é um sistema extremamente complexo. Antes de explorar suas estruturas internas, mecanismos do kernel e componentes de baixo nível, é importante entender alguns dos conceitos fundamentais sobre o funcionamento do sistema.
+Windows is an extremely complex operating system. Before exploring its internal data structures, kernel mechanisms, and low-level components, it is important to understand some of the fundamental concepts behind the system.
 
-Esta seção busca documentar esse processo.
+This section documents that learning process.
 
-Alguns dos temas que podem ser abordados incluem:
+Topics may include:
 
-- Processos e Threads
-- Memória
+- Processes and threads
+- Memory
 - WinAPI
-- Arquivos e Diretórios
+- Files and directories
 - Handles
 - DLLs
-- Processos do Windows
-- Segurança e Tokens
-- Registry
-- Serviços
-- Debugging básico
+- Windows processes
+- Security and tokens
+- The Registry
+- Services
+- Basic debugging
 
-## Para quem é?
+## Who Is This For?
 
-Para pessoas que possuem curiosidade sobre o funcionamento do Windows e querem começar a explorar o sistema de forma mais técnica.
+Anyone curious about how Windows works and interested in exploring the operating system from a more technical perspective.
 
-Não é necessário ter conhecimento prévio de Windows Internals, mas conhecimentos básicos de programação, especialmente em C/C++, podem ajudar.
+Prior knowledge of Windows Internals is not required, although basic programming skills, especially in C/C++, can be helpful.
 
-## Estrutura
+## Structure
 
-Cada diretório pode conter estudos independentes sobre um determinado conceito, incluindo código, anotações, referências e experimentos.
+Each directory may contain independent studies of a particular concept, including source code, notes, references, and experiments.
 
-O objetivo é que, conforme os estudos avancem, seja possível seguir uma progressão natural:
+As the material grows, the goal is to provide a natural learning path:
 
 ```text
-Windows Beginner
+Windows for Beginners
         ↓
 Windows Fundamentals
         ↓
 Windows Internals
         ↓
 Kernel Development / Reverse Engineering
+```
