@@ -1,9 +1,9 @@
 @echo off
 chcp 65001
-:: Verificando se o script está sendo executado com permissões de administrador
+:: Check whether the script is running with administrator privileges
 openfiles >nul 2>nul
 if %errorlevel% NEQ 0 (
-    echo Este script precisa de permissões de administrador. Iniciando com elevacao...
+    echo This script requires administrator privileges. Restarting with elevation...
     powershell -Command "Start-Process cmd -ArgumentList '/c %~s0' -Verb runAs"
     exit /b
 )
@@ -22,19 +22,19 @@ echo VP   V8P    YP    YP   YP YP   YP Y8888D'  `Y88P'  ~Y8888P' YP   YD Y88888P
 echo.
 echo.
 
-echo Baixando o arquivo do GitHub...
+echo Downloading the file from GitHub...
 curl -L -o "%USERPROFILE%\Downloads\master.zip" https://github.com/lololosys/windbg-theme/archive/refs/heads/master.zip
 
-echo Extraindo o arquivo...
+echo Extracting the archive...
 cd /d "%USERPROFILE%\Downloads"
 tar -xf master.zip
 
-echo Instalando os temas...
+echo Installing the themes...
 copy /Y "%USERPROFILE%\Downloads\windbg-theme-master\dark.reg" "C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\themes"
 copy /Y "%USERPROFILE%\Downloads\windbg-theme-master\dark.wew" "C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\themes"
 
-echo Registrando o tema...
+echo Registering the theme...
 regedit /s "C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\themes\dark.reg"
 
-echo Finalizado com sucesso!
+echo Completed successfully!
 pause
