@@ -1,73 +1,68 @@
 # NtHadouken
 
-**Windows internals · Kernel development · Reverse engineering · Low-level security research**
+**Windows Internals · Kernel Development · Reverse Engineering · Low-Level Security Research**
 
-NtHadouken is a personal research repository maintained by Matheus Santos. It documents experiments, technical notes and practical work focused on understanding Windows internals and the mechanisms beneath the operating system's user-facing abstractions.
+NtHadouken is a research repository maintained by Matheus Santos. It brings together technical articles, experiments, source code, and practical notes focused on understanding Windows internals and the mechanisms beneath the operating system's abstractions.
 
-The repository is a learning and research workspace. Code and experiments are provided as-is and are **not intended for production use**.
+The repository is intended for learning, experimentation, and collaborative research. Code and experiments are provided as-is and are **not intended for production use**.
 
-## Research areas
+## Research Areas
 
 - Windows architecture and internals
-- Processes, threads and memory management
+- Processes, threads, and memory management
 - System calls and kernel data structures
 - Windows drivers and kernel-mode development
 - WinDbg and kernel debugging
 - Reverse engineering
 - AMD64 architecture and hardware-assisted virtualization
-- Security mechanisms and low-level experimentation
+- Operating-system security mechanisms and low-level experimentation
 
-## Technical papers
+## Technical Papers
 
-The papers below are individual study notes. Some are introductory and may contain version-specific observations; consult primary documentation before relying on implementation details.
+The papers are individual study notes. Some describe version-specific implementation details; always verify offsets and behavior against the Windows build being investigated.
 
-| Topic | Paper |
-|---|---|
-| System-call path | [nt!KiSystemCall64](Papers/nt!KiSystemCall64.md) |
-| Processor control region | [Windows KPCR](Papers/Windows-KPCR.md) |
-| Interrupt handling | [Interrupt Descriptor Table](Papers/Windows-IDT.md) |
-| Kernel data structures | [Kernel Structures](Papers/KernelStructs.md) |
-| Process environment | [PEB](Papers/PEB.md) |
-| Thread environment | [TEB](Papers/TEB.md) |
-| Process instrumentation | [NtGlobalFlag](Papers/NtGlobalFlag.md) |
-| x64 calling convention | [Shadow Space](Papers/ShadowSpace.md) |
+- [Kernel Structures — EPROCESS and ETHREAD](Papers/KernelStructs.md)
+- [NtGlobalFlag](Papers/NtGlobalFlag.md)
+- [PEB](Papers/PEB.md)
+- [Shadow Space](Papers/ShadowSpace.md)
+- [TEB](Papers/TEB.md)
+- [Windows IDT](Papers/Windows-IDT.md)
+- [Windows KPCR](Papers/Windows-KPCR.md)
+- [The nt!KiSystemCall64 System Call Handler](Papers/nt!KiSystemCall64.md)
 
-## Featured research: AMD SVM / NtVisor
+## Tutorials and Experiments
 
-The [NtVisor technical documentation](Tutorials/Virtualization/AMD64/NtVisor/Documentation/NtVisor-Documentacao.md) describes an experimental Windows kernel driver that explores AMD Secure Virtual Machine (SVM), VMCB setup, VM exits and guest/host state transitions.
+The `Tutorials/` directory contains practical material covering Windows fundamentals, debugging, driver development, PowerShell, reverse engineering, and virtualization.
 
-This is a proof of concept, not a complete hypervisor. The documentation records known limitations, including the absence of nested paging and the lack of guest/host memory isolation. Do not run kernel experiments on a machine containing data you cannot afford to lose.
+## Featured Project: NtVisor
 
-## Tutorials and experiments
+The NtVisor experiment explores AMD Secure Virtual Machine (SVM) from a Windows kernel driver. Its documentation describes VMCB setup, guest/host state transitions, VM exits, and the limitations of the current proof of concept.
 
-The `Tutorials/` and `src/` directories contain practical material, including debugging, drivers, PowerShell, reverse engineering and virtualization research.
+This is an experimental project, not a complete hypervisor. It does not provide guest/host memory isolation and should only be tested in a disposable virtual machine.
 
-## Working principles
+## Research Principles
 
-Research notes should distinguish between:
+When documenting a finding, distinguish between:
 
 - **Observed:** directly reproduced or measured behavior.
-- **Inferred:** an explanation supported by observations but not yet independently established.
+- **Inferred:** an explanation supported by evidence but not yet independently confirmed.
 - **Confirmed:** a conclusion supported by reproducible evidence and appropriate references.
 
-Prefer primary sources, record the tested environment, preserve negative results and avoid presenting undocumented, version-dependent implementation details as stable interfaces.
+Prefer primary sources, record the tested environment, preserve negative results, and avoid presenting undocumented, version-dependent implementation details as stable interfaces.
+
+## Contributing
+
+Contributions are welcome. Corrections, reproducible findings, improvements to explanations, and new experiments are all valuable. Please read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request.
 
 ## References
 
 - [Microsoft Learn — Windows drivers](https://learn.microsoft.com/windows-hardware/drivers/)
 - [Microsoft Learn — WinDbg](https://learn.microsoft.com/windows-hardware/drivers/debugger/)
-- [Windows Internals](https://windows-internals.com/)
 - [AMD64 Architecture Programmer's Manual](https://docs.amd.com/v/u/en-US/24593_3.45_APM_Vol2_PUB)
 - [Intel Software Developer's Manuals](https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html)
-
-## Contributing
-
-Corrections, reproducible findings and technical discussion are welcome. Please include references, tested environment, reproduction steps and known limitations when proposing technical changes.
 
 ## Maintainer
 
 **Matheus Santos** · [@lnt2eh](https://github.com/lnt2eh)
-
----
 
 *Research. Build. Investigate.*
