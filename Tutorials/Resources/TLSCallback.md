@@ -1,88 +1,94 @@
-# Thread Local Storage Callbacks
+# Thread Local Storage (TLS) Callbacks
 
-Este artigo aborda o que é o recurso TLS(Thread Local Storage) e o mecanismo de chamada de retorno TLS(Thread Local Storage) do Windows. Nele, irei explicar o que é este mecanismo, como funciona e irei deixar um código de utilização prática para aqueles que tiverem interesse em praticar e realizar suas próprias modificações. Este artigo será útil para um futuro post para técnicas anti-reversing em Windows que irei adicionar aqui no projeto **NtHadouken**.
+This article introduces the Windows Thread Local Storage (TLS) feature and the TLS callback mechanism. It explains what TLS is, how it works, and provides a practical code example for readers who want to experiment and make their own modifications. This article will also serve as a foundation for a future NtHadouken post about Windows anti-reversing techniques.
 
-## O que é o TLS(Thread Local Storage)? 
-Cada variável local de uma função são exclusivas para cada thread que executa a função. No entanto, as variáveis estáticas e globais são compartilhadas por todos os threads no processo. Vale ressaltar que todos os threads de um processo compartilham seu espaço de endereço virtual. Com o TLS(Thread Local Storage), é possível fornecer dados exclusivos para cada thread que o processo pode acessar usando um índice global. Um thread aloca o índice, que pode ser usado pelos outros threads para recuperar os dados exclusivos associados ao índice.
+## What Is Thread Local Storage (TLS)?
 
-## Como ele funciona?
-Durante a criação de threads, o sistema aloca uma matriz de valores **(LPVOID)** para o TLS, estes por sua vez são inicializados como **NULL**. Antes que um índice possa ser utilizado, ele deve ser alocado por um dos threads.
-Cada thread armazena seus dados para um índice TLS na matriz. 
+A function's local variables are private to each thread executing that function. However, static and global variables are shared by all threads in a process. It is worth noting that all threads in a process share the same virtual address space.
 
-## Retorno de chamada TLS ou TLS Callback
-Callbacks TLS é um mecanismo do Windows que permite que um programa defina uma função de chamada quando uma thread for criada. A utilização desses callbacks podem ser diversos, como inicialização de dados específicos da thread ou modificar o comportamento da thread.
+TLS makes it possible to provide data that is private to each thread and can be accessed by the process through a global index. A thread allocates the index, which can then be used by threads to retrieve the thread-specific data associated with it.
 
-Inclusive, essa é uma das técnicas utilizadas por criadores de malware como técnica antidepuração, onde um programa pode utilizar o callback TLS para executar código cantes do Entry Point principal do programa, que é definido no cabeçalho PE. Ou seja, um programa pode utilizar o Callback TLS para detectar se está sendo depurado em caso de afirmativo, pode encerrar o processo ou tomar outras medidas para evitar a depuração. Dificultando assim a engenharia reversa. **Isso será abordado futuramente na seção de [Reversing](https://github.com/lnt2eh/NtHadouken/tree/main/Tutorials/Reverse-Engineering)**
+## How Does It Work?
 
-## Código Prático
-``` C
-    Código de utilização prática
+When threads are created, the system provides a TLS array of values (**LPVOID**), which are initially set to **NULL**. Before an index can be used, it must be allocated by a thread.
 
-    /*
-    Criado por _int2Eh para fins de testes práticos.
-    Projeto: **NtHadouken**
-    */
+Each thread stores its data for a TLS index in its own array.
 
-    #include <windows.h>
-    #include <stdio.h>
+## TLS Callback
 
-    /*
-        Prototipação da função de callback TLS.
-        Essa função será executada automaticamente durante o ciclo de vida da thread/processo.
-    */
-    void NTAPI TLSCallback(PVOID DllHandle, DWORD Reason, PVOID Reserved);
+TLS callbacks are a Windows mechanism that allows a program to register a function that is called during process or thread lifecycle events. These callbacks can be used for several purposes, such as initializing thread-specific data or performing other setup tasks.
 
-    /*
-        Definição do ponteiro da função na seção .CRT$XLB.
-        Essa seção é usada pelo loader do Windows para localizar e executar callbacks TLS.
-    */
-    #ifdef _MSC_VER
-    // Para compiladores MSVC
-    #pragma const_seg(".CRT$XLB")
-    EXTERN_C const PIMAGE_TLS_CALLBACK pTLSCallback = TLSCallback;
-    #pragma const_seg()
-    #else
-    // Para compiladores MinGW
-    PIMAGE_TLS_CALLBACK pTLSCallback __attribute__((section(".CRT$XLB"))) = TLSCallback;
-    #endif
+TLS callbacks have also been used by malware authors as an anti-debugging technique. A program can use a TLS callback to execute code before the main entry point defined in the PE image. For example, a program could check whether it is being debugged and, if so, terminate the process or take other measures to hinder analysis.
 
-    /*
-        Implementação do callback TLS.
-        Aqui pode-se executar código antes mesmo do Entry Point principal (main ou WinMain).
-    */
-    void NTAPI TLSCallback(PVOID DllHandle, DWORD Reason, PVOID Reserved) {
-        switch (Reason) {
-            case DLL_PROCESS_ATTACH:
-                /*
-                    Verifica se o processo está sendo depurado.
-                    Pode ser usado como técnica anti-debug.
-                */
-                if (IsDebuggerPresent()) {
-                    MessageBoxA(NULL, "Debugger detectado! Encerrando o processo...", "Alerta TLS", MB_ICONERROR);
-                    ExitProcess(1);
-                } else {
-                    MessageBoxA(NULL, "TLS Callback: DLL_PROCESS_ATTACH sem depurador.", "Info TLS", MB_OK);
-                }
-                break;
-            case DLL_THREAD_ATTACH:
-                MessageBoxA(NULL, "TLS Callback: DLL_THREAD_ATTACH", "Info TLS", MB_OK);
-                break;
-            case DLL_THREAD_DETACH:
-                MessageBoxA(NULL, "TLS Callback: DLL_THREAD_DETACH", "Info TLS", MB_OK);
-                break;
-            case DLL_PROCESS_DETACH:
-                MessageBoxA(NULL, "TLS Callback: DLL_PROCESS_DETACH", "Info TLS", MB_OK);
-                break;
-        }
+This topic will be explored further in the [Reverse Engineering](https://github.com/lnt2eh/NtHadouken/tree/main/Tutorials/Reverse-Engineering) section.
+
+## Practical Example
+
+```c
+/*
+ * Practical example for experimentation.
+ * Created by _int2Eh for the NtHadouken project.
+ */
+
+#include <windows.h>
+#include <stdio.h>
+
+/*
+ * TLS callback prototype.
+ * This function is invoked automatically during process/thread lifecycle events.
+ */
+void NTAPI TLSCallback(PVOID DllHandle, DWORD Reason, PVOID Reserved);
+
+/*
+ * Define the callback pointer in the .CRT$XLB section.
+ * The Windows loader uses this section to locate TLS callbacks.
+ */
+#ifdef _MSC_VER
+// MSVC
+#pragma const_seg(".CRT$XLB")
+EXTERN_C const PIMAGE_TLS_CALLBACK pTLSCallback = TLSCallback;
+#pragma const_seg()
+#else
+// MinGW
+PIMAGE_TLS_CALLBACK pTLSCallback __attribute__((section(".CRT$XLB"))) = TLSCallback;
+#endif
+
+/*
+ * TLS callback implementation.
+ * Code here can run before the program's main entry point (main or WinMain).
+ */
+void NTAPI TLSCallback(PVOID DllHandle, DWORD Reason, PVOID Reserved) {
+    switch (Reason) {
+        case DLL_PROCESS_ATTACH:
+            /*
+             * Check whether the process is being debugged.
+             * This can be used as an anti-debugging technique.
+             */
+            if (IsDebuggerPresent()) {
+                MessageBoxA(NULL, "Debugger detected! Terminating the process...", "TLS Alert", MB_ICONERROR);
+                ExitProcess(1);
+            } else {
+                MessageBoxA(NULL, "TLS Callback: DLL_PROCESS_ATTACH without a debugger.", "TLS Info", MB_OK);
+            }
+            break;
+        case DLL_THREAD_ATTACH:
+            MessageBoxA(NULL, "TLS Callback: DLL_THREAD_ATTACH", "TLS Info", MB_OK);
+            break;
+        case DLL_THREAD_DETACH:
+            MessageBoxA(NULL, "TLS Callback: DLL_THREAD_DETACH", "TLS Info", MB_OK);
+            break;
+        case DLL_PROCESS_DETACH:
+            MessageBoxA(NULL, "TLS Callback: DLL_PROCESS_DETACH", "TLS Info", MB_OK);
+            break;
     }
+}
 
-    /*
-        Entry Point principal do programa.
-        Este código só será executado se nenhum depurador for detectado no TLS Callback.
-    */
-    int main() {
-        MessageBoxA(NULL, "Entry Point Principal (main)", "NtHadouken", MB_OK);
-        return 0;
-    }
-
+/*
+ * Program entry point.
+ * This code runs only if the TLS callback does not detect a debugger and terminate the process.
+ */
+int main() {
+    MessageBoxA(NULL, "Main Entry Point (main)", "NtHadouken", MB_OK);
+    return 0;
+}
 ```
