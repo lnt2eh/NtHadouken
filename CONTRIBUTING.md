@@ -1,47 +1,54 @@
 # Contributing to NtHadouken
 
-Thank you for taking the time to improve this research repository.
+Thanks for your interest in contributing to NtHadouken!
 
-## What is useful
+This repository is a collaborative space for Windows Internals, kernel development, reverse engineering, and low-level security research. Contributions can be small: a correction, a clearer explanation, a reproducible experiment, or a useful reference.
 
-- Corrections to technical explanations, with references.
-- Reproducible experiments and minimal test cases.
-- Debugging notes that include the relevant environment and commands.
-- Improvements to clarity, structure and terminology.
-- Documentation of limitations, failed attempts and unexpected results.
+## What You Can Contribute
 
-## Research quality
+- Technical articles and documentation.
+- Corrections to existing explanations.
+- Reproducible experiments and proof-of-concept code.
+- Debugging notes and analysis of Windows internals.
+- References to official documentation, research papers, and technical resources.
+- Improvements to code readability and project organization.
 
-When submitting a technical finding:
+## Guidelines for Technical Contributions
 
-1. State the question or hypothesis.
-2. Describe the environment: Windows version/build, architecture, relevant hardware and tool versions.
-3. Separate direct observations from interpretations.
-4. Include the steps needed to reproduce the result.
-5. Cite primary sources where possible (Microsoft, AMD, Intel or original research).
-6. Explain limitations and whether the behavior may vary across Windows versions or hardware.
+When submitting a finding or experiment, please include as much of the following as applies:
 
-Do not describe a result as confirmed when it has only been inferred from a single observation.
+1. **Objective:** What question are you investigating?
+2. **Environment:** Windows version/build, architecture, hardware, compiler, and tool versions.
+3. **Methodology:** How did you perform the experiment?
+4. **Observations:** What did you actually observe?
+5. **Analysis:** What do you believe the observations mean?
+6. **Reproduction:** Can another researcher reproduce the result?
+7. **References:** Link the documentation or sources that support the explanation.
 
-## Code contributions
+Please distinguish direct observations from assumptions or hypotheses. Windows internals can change between builds, so version-specific offsets and undocumented behavior should be clearly identified.
 
-- Keep experiments focused and independently understandable.
-- Document build requirements and execution steps.
-- Avoid including credentials, personal data, proprietary material or files copied from systems without authorization.
-- Do not submit binaries unless they are necessary to reproduce the experiment; explain their origin and purpose.
-- Clearly mark code that can crash, corrupt data, alter kernel state or otherwise destabilize a test machine.
+## Code Style
 
-## Security research
+- Keep examples focused and easy to reproduce.
+- Include build and execution instructions when needed.
+- Prefer descriptive names and comments that explain non-obvious behavior.
+- Do not include credentials, personal data, proprietary code, or files obtained without authorization.
+- Clearly document experiments that may crash the system, corrupt data, or change kernel state.
 
-Only test systems and software that you own or are explicitly authorized to assess. Do not submit exploit material targeting third-party systems or disclose sensitive vulnerability details before an appropriate coordinated disclosure process.
+## Security Research
 
-## Pull requests
+Only test software and systems that you own or are explicitly authorized to assess. Follow responsible disclosure practices when documenting vulnerabilities. Do not publish sensitive details that could put users or systems at risk before appropriate coordination.
 
-Use a descriptive title and explain:
+## Pull Requests
 
-- What changed.
-- Why it changed.
-- How it was tested.
-- Any known limitations.
+Before opening a pull request:
 
-For documentation-only changes, identify the source material used.
+- Make sure the documentation is written in English.
+- Check links, code blocks, formatting, and spelling.
+- Explain what changed and why.
+- Include the environment and steps used to validate technical changes.
+- Mention known limitations or unverified assumptions.
+
+A good contribution does not need to be large. Clear reasoning, reproducible results, and accurate documentation matter most.
+
+Thank you for helping make NtHadouken better!
