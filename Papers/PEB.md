@@ -1,41 +1,41 @@
-# Anatomia do Process Environment Block (PEB) no Windows
+# Anatomy of the Process Environment Block (PEB) in Windows
 
-## Introdução
+## Introduction
 
-O Process Environment Block (PEB) é uma das estruturas de dados mais fundamentais e críticas no sistema operacional Windows. Localizada no espaço de usuário (user-mode), esta estrutura contém informações vitais sobre um processo em execução e serve como um ponto central de referência para o sistema operacional e para o próprio processo. Apesar de ser criada pelo kernel, a PEB reside na memória de usuário e é acessível tanto pelo código em modo usuário quanto pelo código em modo kernel, tornando-a um componente essencial para entender o funcionamento interno do Windows.
+The Process Environment Block (PEB) is one of the most fundamental and critical data structures in the Windows operating system. Located in user space (user mode), this structure contains vital information about a running process and serves as a central point of reference for the operating system and the process itself. Although it is created by the kernel, the PEB resides in user memory and is accessible to both user-mode and kernel-mode code, making it an essential component for understanding Windows internals.
 
-Este artigo explora em profundidade a estrutura do PEB, seus campos mais importantes, como acessá-la programaticamente e suas implicações para desenvolvimento de baixo nível e segurança. Compreender o PEB é fundamental para qualquer pessoa interessada em Windows Internals, desenvolvimento de software de baixo nível, análise de malware ou engenharia reversa.
+This article explores the PEB structure in depth, its most important fields, how to access it programmatically, and its implications for low-level development and security. Understanding the PEB is essential for anyone interested in Windows Internals, low-level software development, malware analysis, or reverse engineering.
 
-## Localização e Acesso ao PEB
+## PEB Location and Access
 
-Cada processo no Windows possui sua própria instância do PEB. Esta estrutura é criada durante a inicialização do processo e permanece válida até o término do mesmo. A localização do PEB pode ser determinada de várias maneiras:
+Each Windows process has its own PEB instance. This structure is created during process initialization and remains valid until the process terminates. The PEB can be located in several ways:
 
-1. **Via registro FS/GS**: 
-   - Em arquiteturas x86 (32 bits), o PEB é acessível através do registro FS. Especificamente, `FS:[0x30]` contém um ponteiro para o TEB (Thread Environment Block), e o campo `ProcessEnvironmentBlock` do TEB (offset 0x30) aponta para o PEB.
-   - Em arquiteturas x64 (64 bits), o registro GS é usado em vez do FS. O ponteiro para o TEB está em `GS:[0x30]`, e o campo do PEB está no mesmo offset relativo dentro do TEB.
+1. **Through the FS/GS registers**:
+   - On x86 (32-bit) architectures, the PEB is accessible through the FS register. Specifically, `FS:[0x30]` contains a pointer to the TEB (Thread Environment Block), and the TEB's `ProcessEnvironmentBlock` field (offset 0x30) points to the PEB.
+   - On x64 (64-bit) architectures, the GS register is used instead of FS. The pointer to the TEB is at `GS:[0x30]`, and the PEB field is at the same offset relative to the TEB.
 
-2. **Via API do Windows**:
-   - A função `NtQueryInformationProcess` com o parâmetro `ProcessBasicInformation` pode ser usada para obter um ponteiro para o PEB.
-   - Este método é mais portável, mas menos direto que o acesso via registros FS/GS.
+2. **Through the Windows API**:
+   - The `NtQueryInformationProcess` function with the `ProcessBasicInformation` parameter can be used to retrieve a pointer to the PEB.
+   - This method is more portable, but less direct than accessing it through the FS/GS registers.
 
-3. **Via WinDbg**:
-   - No depurador WinDbg, o comando `!peb` exibe informações detalhadas sobre o PEB do processo atual.
+3. **Through WinDbg**:
+   - In the WinDbg debugger, the `!peb` command displays detailed information about the current process's PEB.
 
-Exemplo de código em Assembly (x64) para acessar o PEB:
+Example of x64 Assembly code to access the PEB:
 
 ```assembly
-; Acesso ao PEB em x64 Assembly
-mov rax, gs:[0x60]    ; RAX agora contém o ponteiro para o PEB
+; Accessing the PEB in x64 Assembly
+mov rax, gs:[0x60]    ; RAX now contains the pointer to the PEB
 ```
 
-Exemplo em C/C++:
+Example in C/C++:
 
 ```c
-// Acesso ao PEB em C/C++
+// Accessing the PEB in C/C++
 #include <windows.h>
 #include <winternl.h>
 
-// Definição da função NtQueryInformationProcess
+// NtQueryInformationProcess function definition
 typedef NTSTATUS (NTAPI *pNtQueryInformationProcess)(
     HANDLE ProcessHandle,
     PROCESSINFOCLASS ProcessInformationClass,
@@ -47,17 +47,17 @@ typedef NTSTATUS (NTAPI *pNtQueryInformationProcess)(
 PPEB GetPEB() {
     PROCESS_BASIC_INFORMATION pbi;
     ZeroMemory(&pbi, sizeof(pbi));
-    
-    // Obter handle para ntdll.dll
+
+    // Get a handle to ntdll.dll
     HMODULE ntdll = GetModuleHandleA("ntdll.dll");
     if (!ntdll) return NULL;
-    
-    // Obter endereço da função NtQueryInformationProcess
-    pNtQueryInformationProcess NtQueryInformationProcess = 
+
+    // Get the address of NtQueryInformationProcess
+    pNtQueryInformationProcess NtQueryInformationProcess =
         (pNtQueryInformationProcess)GetProcAddress(ntdll, "NtQueryInformationProcess");
     if (!NtQueryInformationProcess) return NULL;
-    
-    // Chamar NtQueryInformationProcess para obter informações básicas do processo
+
+    // Call NtQueryInformationProcess to retrieve basic process information
     NTSTATUS status = NtQueryInformationProcess(
         GetCurrentProcess(),
         ProcessBasicInformation,
@@ -65,18 +65,18 @@ PPEB GetPEB() {
         sizeof(pbi),
         NULL
     );
-    
+
     if (NT_SUCCESS(status)) {
         return pbi.PebBaseAddress;
     }
-    
+
     return NULL;
 }
 ```
 
-## Estrutura Detalhada do PEB
+## Detailed PEB Structure
 
-A estrutura do PEB é complexa e contém numerosos campos. Abaixo está uma versão simplificada da estrutura do PEB para Windows 10/11 (64 bits), com foco nos campos mais importantes:
+The PEB structure is complex and contains numerous fields. Below is a simplified version of the PEB structure for Windows 10/11 (64-bit), focusing on its most important fields:
 
 ```c
 typedef struct _PEB {
@@ -119,65 +119,65 @@ typedef struct _PEB {
             ULONG ReservedBits0 : 24;
         };
     };
-    // ... (muitos outros campos omitidos por brevidade)
+    // ... (many other fields omitted for brevity)
     PVOID ApiSetMap;                              // 0x068
-    // ... (mais campos omitidos)
+    // ... (more fields omitted)
     PVOID LoaderLock;                             // 0x0A0
-    // ... (mais campos omitidos)
+    // ... (more fields omitted)
     ULONG OSMajorVersion;                         // 0x118
     ULONG OSMinorVersion;                         // 0x11C
     USHORT OSBuildNumber;                         // 0x120
     USHORT OSCSDVersion;                          // 0x122
     ULONG OSPlatformId;                           // 0x124
-    // ... (mais campos omitidos)
+    // ... (more fields omitted)
 } PEB, *PPEB;
 ```
 
-É importante notar que a estrutura exata do PEB pode variar entre diferentes versões do Windows. A estrutura acima é uma representação simplificada e os offsets podem mudar.
+It is important to note that the exact PEB structure may vary between different Windows versions. The structure above is a simplified representation, and offsets may change.
 
-## Campos Críticos e Suas Funções
+## Critical Fields and Their Functions
 
-Vamos analisar alguns dos campos mais importantes do PEB:
+Let's examine some of the PEB's most important fields:
 
 ### 1. BeingDebugged (0x002)
 
-Este campo booleano indica se o processo está sendo depurado. Quando um depurador está anexado ao processo, este campo é definido como `TRUE`. Muitos softwares maliciosos verificam este campo para detectar a presença de um depurador e alterar seu comportamento.
+This Boolean field indicates whether the process is being debugged. When a debugger is attached to the process, this field is set to `TRUE`. Many malicious programs check this field to detect the presence of a debugger and change their behavior.
 
 ```c
-// Verificar se o processo está sendo depurado
+// Check whether the process is being debugged
 PPEB peb = GetPEB();
 if (peb && peb->BeingDebugged) {
-    // Processo está sendo depurado
+    // The process is being debugged
 }
 ```
 
 ### 2. ImageBaseAddress (0x010)
 
-Contém o endereço base onde a imagem do executável principal do processo foi carregada na memória. Este endereço é crucial para calcular endereços relativos dentro do executável.
+Contains the base address where the process's main executable image was loaded into memory. This address is essential for calculating relative addresses within the executable.
 
 ```c
-// Obter o endereço base da imagem
+// Get the image base address
 PPEB peb = GetPEB();
 if (peb) {
     PVOID imageBase = peb->ImageBaseAddress;
-    // Usar o endereço base para cálculos
+    // Use the base address for calculations
 }
 ```
 
 ### 3. Ldr (0x018)
 
-Este campo aponta para uma estrutura `PEB_LDR_DATA` que contém informações sobre todos os módulos (DLLs) carregados no processo. Esta estrutura contém listas encadeadas de módulos carregados, que podem ser percorridas para enumerar todas as DLLs.
+This field points to a `PEB_LDR_DATA` structure containing information about all modules (DLLs) loaded in the process. This structure contains linked lists of loaded modules, which can be traversed to enumerate all DLLs.
 
 ```c
-// Enumerar módulos carregados
+// Enumerate loaded modules
 PPEB peb = GetPEB();
 if (peb && peb->Ldr) {
     PLIST_ENTRY moduleList = &peb->Ldr->InMemoryOrderModuleList;
     PLIST_ENTRY entry = moduleList->Flink;
-    
+
     while (entry != moduleList) {
         LDR_DATA_TABLE_ENTRY* module = CONTAINING_RECORD(entry, LDR_DATA_TABLE_ENTRY, InMemoryOrderLinks);
-        // Processar informações do módulo
+        // Process module information
         entry = entry->Flink;
     }
 }
@@ -185,115 +185,115 @@ if (peb && peb->Ldr) {
 
 ### 4. ProcessParameters (0x020)
 
-Aponta para uma estrutura `RTL_USER_PROCESS_PARAMETERS` que contém informações sobre os parâmetros do processo, incluindo linha de comando, diretório atual, variáveis de ambiente e muito mais.
+Points to an `RTL_USER_PROCESS_PARAMETERS` structure containing process parameters, including the command line, current directory, environment variables, and more.
 
 ```c
-// Acessar a linha de comando do processo
+// Access the process command line
 PPEB peb = GetPEB();
 if (peb && peb->ProcessParameters) {
     UNICODE_STRING commandLine = peb->ProcessParameters->CommandLine;
-    // Processar a linha de comando
+    // Process the command line
 }
 ```
 
 ### 5. ProcessHeap (0x030)
 
-Ponteiro para o heap padrão do processo. Este é o heap usado por funções como `HeapAlloc` quando nenhum heap específico é fornecido.
+A pointer to the process's default heap. This is the heap used by functions such as `HeapAlloc` when no specific heap is provided.
 
 ```c
-// Obter o heap padrão do processo
+// Get the default process heap
 PPEB peb = GetPEB();
 if (peb) {
     HANDLE defaultHeap = peb->ProcessHeap;
-    // Usar o heap padrão
+    // Use the default heap
 }
 ```
 
 ### 6. ApiSetMap (0x068)
 
-Aponta para o mapa de API Set do processo, que é usado para resolver referências a APIs. O API Set Schema é um mecanismo introduzido no Windows 7 que permite um mapeamento mais flexível entre nomes de DLLs e suas implementações reais.
+Points to the process's API Set map, which is used to resolve API references. The API Set Schema is a mechanism introduced in Windows 7 that allows more flexible mapping between DLL names and their actual implementations.
 
 ### 7. OSMajorVersion, OSMinorVersion, OSBuildNumber (0x118-0x122)
 
-Estes campos contêm informações sobre a versão do sistema operacional em que o processo está sendo executado.
+These fields contain information about the operating system version on which the process is running.
 
-## Técnicas de Análise e Manipulação
+## Analysis and Manipulation Techniques
 
-### Análise do PEB em WinDbg
+### Analyzing the PEB in WinDbg
 
-O depurador WinDbg oferece comandos específicos para analisar o PEB:
+The WinDbg debugger provides commands specifically for analyzing the PEB:
 
 ```
-!peb                  # Exibe informações gerais sobre o PEB
-dt ntdll!_PEB         # Exibe a definição da estrutura PEB
-dt ntdll!_PEB @$peb   # Exibe o conteúdo do PEB atual
+!peb                  # Display general information about the PEB
+dt ntdll!_PEB         # Display the PEB structure definition
+dt ntdll!_PEB @$peb   # Display the contents of the current PEB
 ```
 
-### Manipulação do PEB para Anti-Debugging
+### PEB Manipulation for Anti-Debugging
 
-Uma técnica comum usada por malware é manipular o campo `BeingDebugged` para evitar detecção:
+A common technique used by malware is to manipulate the `BeingDebugged` field to avoid detection:
 
 ```c
-// Técnica anti-debugging: limpar o flag BeingDebugged
+// Anti-debugging technique: clear the BeingDebugged flag
 PPEB peb = GetPEB();
 if (peb) {
     peb->BeingDebugged = FALSE;
 }
 ```
 
-### Enumeração de Módulos Carregados
+### Enumerating Loaded Modules
 
-O campo `Ldr` do PEB pode ser usado para enumerar todos os módulos carregados no processo, o que é útil para análise de malware e engenharia reversa:
+The PEB's `Ldr` field can be used to enumerate all modules loaded in the process, which is useful for malware analysis and reverse engineering:
 
 ```c
 void EnumerateLoadedModules() {
     PPEB peb = GetPEB();
     if (!peb || !peb->Ldr) return;
-    
+
     PLIST_ENTRY moduleList = &peb->Ldr->InMemoryOrderModuleList;
     PLIST_ENTRY entry = moduleList->Flink;
-    
+
     while (entry != moduleList) {
         LDR_DATA_TABLE_ENTRY* module = CONTAINING_RECORD(entry, LDR_DATA_TABLE_ENTRY, InMemoryOrderLinks);
-        
+
         wprintf(L"Module: %s\n", module->FullDllName.Buffer);
         wprintf(L"  Base Address: 0x%p\n", module->DllBase);
         wprintf(L"  Entry Point:  0x%p\n", module->EntryPoint);
-        
+
         entry = entry->Flink;
     }
 }
 ```
 
-## Implicações para Segurança e Desenvolvimento
+## Security and Development Implications
 
-### Segurança
+### Security
 
-1. **Anti-Debugging**: Como mencionado, o campo `BeingDebugged` é frequentemente alvo de técnicas anti-debugging.
+1. **Anti-Debugging**: As mentioned above, the `BeingDebugged` field is frequently targeted by anti-debugging techniques.
 
-2. **DLL Injection**: O conhecimento da estrutura do PEB é crucial para técnicas de injeção de DLL, pois permite manipular as listas de módulos carregados.
+2. **DLL Injection**: Knowledge of the PEB structure is important for DLL injection techniques because it allows the loaded-module lists to be manipulated.
 
-3. **Process Hollowing**: Esta técnica avançada de malware envolve a substituição do conteúdo de um processo legítimo por código malicioso, frequentemente manipulando o campo `ImageBaseAddress` do PEB.
+3. **Process Hollowing**: This advanced malware technique involves replacing the contents of a legitimate process with malicious code, often by manipulating the PEB's `ImageBaseAddress` field.
 
-4. **API Hooking**: Compreender o PEB é essencial para implementar hooks em APIs do Windows, pois permite localizar e modificar as tabelas de importação e exportação de DLLs.
+4. **API Hooking**: Understanding the PEB is useful when implementing Windows API hooks because it helps locate and modify DLL import and export tables.
 
-### Desenvolvimento de Baixo Nível
+### Low-Level Development
 
-1. **Loader Personalizado**: Desenvolvedores de loaders personalizados precisam entender e manipular o PEB para carregar corretamente DLLs e resolver dependências.
+1. **Custom Loaders**: Developers of custom loaders need to understand and manipulate the PEB to load DLLs correctly and resolve dependencies.
 
-2. **Depuradores e Ferramentas de Análise**: Ferramentas como depuradores e analisadores de processos dependem do acesso ao PEB para obter informações críticas sobre o processo.
+2. **Debuggers and Analysis Tools**: Tools such as debuggers and process analyzers rely on access to the PEB to obtain critical process information.
 
-3. **Desenvolvimento de Drivers**: Embora o PEB esteja no espaço de usuário, drivers em modo kernel frequentemente precisam acessá-lo para obter informações sobre processos.
+3. **Driver Development**: Although the PEB resides in user space, kernel-mode drivers may need to access it to obtain process information.
 
-## Conclusão
+## Conclusion
 
-O Process Environment Block (PEB) é uma estrutura fundamental no sistema operacional Windows, servindo como um repositório central de informações sobre um processo em execução. Compreender sua estrutura, campos e como acessá-lo é essencial para qualquer pessoa envolvida em desenvolvimento de baixo nível, análise de segurança ou engenharia reversa no Windows.
+The Process Environment Block (PEB) is a fundamental structure in the Windows operating system, serving as a central repository of information about a running process. Understanding its structure, fields, and access methods is essential for anyone involved in low-level development, security analysis, or reverse engineering on Windows.
 
-Este artigo forneceu uma visão detalhada do PEB, incluindo sua estrutura, campos críticos, métodos de acesso e implicações para segurança e desenvolvimento. No entanto, é importante lembrar que a estrutura exata do PEB pode variar entre diferentes versões do Windows, e alguns detalhes internos podem não ser documentados oficialmente pela Microsoft.
+This article provided a detailed overview of the PEB, including its structure, critical fields, access methods, and implications for security and development. However, it is important to remember that the exact PEB structure may vary between Windows versions, and some internal details may not be officially documented by Microsoft.
 
-Para um estudo mais aprofundado, recomenda-se consultar recursos como o livro "Windows Internals" de Mark Russinovich, ou explorar o código-fonte de projetos open-source como o ReactOS, que implementa estruturas compatíveis com o Windows.
+For further study, consider consulting resources such as Mark Russinovich's book "Windows Internals" or exploring the source code of open-source projects such as ReactOS, which implements Windows-compatible structures.
 
-## Referências
+## References
 
 1. Russinovich, M., Solomon, D., & Ionescu, A. (2012). Windows Internals, Part 1 (6th ed.). Microsoft Press.
 2. Yosifovich, P., Ionescu, A., Russinovich, M., & Solomon, D. (2017). Windows Internals, Part 1 (7th ed.). Microsoft Press.
