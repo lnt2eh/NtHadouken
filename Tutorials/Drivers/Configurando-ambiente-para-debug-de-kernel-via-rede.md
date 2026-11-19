@@ -1,152 +1,131 @@
+## Introduction
 
-## Introdução
+In this tutorial, we will configure WinDbg for kernel debugging using KDNET. By the end of this guide, you will be able to:
 
-Neste tutorial, abordaremos a configuração do WinDbg para debug do Kernel utilizando o KDNET. Ao final deste guia, você será capaz de:
+- Configure Windows for debugging mode
+- Install the SDK correctly
+- Configure KDNET for remote debugging
+- Test and validate the debugging connection
 
--   Definir o Windows para modo debug
-    
--   Instalar o SDK (Software Development Kit) corretamente
-    
--   Configurar o KDNET para depuração remota
-    
--   Testar e validar a conexão de debug
-    
+## 🗺️ Tutorial Roadmap
 
-## 🗺️ Roadmap do Tutorial
+1. Configure Windows for Debugging Mode
+2. Install the SDK
+3. Configure KDNET
+4. Test the Debugging Connection
+5. Conclusion
 
-1.  Definir o Windows para Modo Debug
-    
-2.  Instalação do SDK
-    
-3.  Configuração do KDNET
-    
-4.  Testando o Debug
-    
-5.  Conclusão
-----------
-## 1. Definindo o Windows para Modo Debug
+---
 
-Antes de iniciar o debug do Kernel, é necessário configurar o Windows para operar em modo de depuração. Essa configuração permite que o sistema operacional seja monitorado e depurado corretamente.
+## 1. Configuring Windows for Debugging Mode
 
-### Passos:
+Before starting kernel debugging, Windows must be configured to operate in debugging mode. This setting allows the operating system to be monitored and debugged correctly.
 
-1.  Abra o **Prompt de Comando** como **Administrador**.
-    
-2.  Digite o seguinte comando para habilitar o modo debug:
-    
-    ```
-    bcdedit /set debug on
-    ```
-    
-3.  Reinicie o computador para que as alterações tenham efeito.
-    
+### Steps
 
-Caso precise desativar a depuração no futuro, utilize:
+1. Open **Command Prompt** as **Administrator**.
+2. Run the following command to enable debugging mode:
+
+   ```
+   bcdedit /set debug on
+   ```
+
+3. Restart the computer for the changes to take effect.
+
+If you need to disable debugging in the future, run:
 
 ```
 bcdedit /set debug off
 ```
 
-## 2. Instalação do SDK (Software Development Kit)
+## 2. Installing the SDK (Software Development Kit)
 
-O SDK é essencial para o debug do Kernel, pois fornece as ferramentas necessárias para a depuração. Ele deve ser instalado apenas na **máquina hospedeira**, onde o WinDbg será executado.
+The SDK is essential for kernel debugging because it provides the required debugging tools. It should be installed only on the **host machine**, where WinDbg will run.
 
-### Passos:
+### Steps
 
-1.  Baixe o SDK a partir do [site oficial da Microsoft](https://developer.microsoft.com/en-us/windows/downloads/windows-10-sdk/).
-    
-2.  Execute o instalador e, ao escolher os componentes, selecione apenas **"Debugging Tools for Windows"**.
-    
-3.  Finalize a instalação e verifique se o diretório do depurador foi criado em:
-    
-    ```
-    C:\Program Files (x86)\Windows Kits\10\Debuggers\x64
-    ```
-    
+1. Download the SDK from the [official Microsoft website](https://developer.microsoft.com/en-us/windows/downloads/windows-10-sdk/).
+2. Run the installer and, when selecting components, choose only **"Debugging Tools for Windows"**.
+3. Complete the installation and verify that the debugger directory was created at:
 
-## 3. Configuração do KDNET
+   ```
+   C:\Program Files (x86)\Windows Kits\10\Debuggers\x64
+   ```
 
-O KDNET permite a depuração remota via rede. Siga os passos abaixo para configurá-lo:
+## 3. Configuring KDNET
 
-### Na máquina hospedeira:
+KDNET enables remote debugging over a network. Follow the steps below to configure it.
 
-1.  Navegue até o diretório:
-    
-    ```
-    C:\Program Files (x86)\Windows Kits\10\Debuggers\x64
-    ```
-    
-2.  Copie os arquivos `Kdnet.exe` e `VerifiedNICList.xml` para um local acessível.
-    
+### On the host machine
 
-### Na máquina alvo:
+1. Navigate to:
 
-1.  Crie um diretório chamado `KD` na raiz do drive C: (`C:\KD`).
-    
-2.  Cole os arquivos `Kdnet.exe` e `VerifiedNICList.xml` dentro de `C:\KD`.
-    
-3.  Abra o **Prompt de Comando** como **Administrador** e navegue até `C:\KD`:
-    
-    ```
-    cd C:\KD
-    ```
-    
-4.  Execute o seguinte comando para verificar as interfaces de rede compatíveis:
-    
-    ```
-    kdnet.exe
-    ```
-    
-    -   Isso exibirá as NICs suportadas pelo KDNET.
-        
-5.  Inicie a depuração via rede, substituindo `[ip_host]` pelo IP da máquina hospedeira e `[porta]` pela porta desejada:
-    
-    ```
-    kdnet.exe [ip_host] [porta]
-    ```
-    
-    **Exemplo:**
-    
-    ```
-    kdnet.exe 192.168.2.1 51111
-    ```
-    
-6.  Se a execução for bem-sucedida, uma chave de configuração será exibida, similar a:
-    
-    ```
-    Key=2steg4fzbj2sz.23418vzkd4ko3.1g34ou07z4pev.1sp3yo9yz874p
-    ```
-    
-    Essa chave será utilizada para configurar a conexão no WinDbg.
-    
+   ```
+   C:\Program Files (x86)\Windows Kits\10\Debuggers\x64
+   ```
 
-## 4. Testando o Debug
+2. Copy the `Kdnet.exe` and `VerifiedNICList.xml` files to an accessible location.
 
-Agora que a chave de configuração foi gerada na máquina alvo, configure o WinDbg na máquina hospedeira para estabelecer a conexão com o Kernel da máquina alvo.
+### On the target machine
 
-### Passos:
+1. Create a directory named `KD` at the root of the C: drive (`C:\KD`).
+2. Copy `Kdnet.exe` and `VerifiedNICList.xml` into `C:\KD`.
+3. Open **Command Prompt** as **Administrator** and navigate to `C:\KD`:
 
-1.  Abra o **WinDbg** na máquina hospedeira.
-    
-2.  Pressione **CTRL + K** para abrir a janela de configuração do debug do Kernel.
-    
-3.  Na aba **NET**, insira:
-    
-    -   **Port Number**: a porta definida no comando `kdnet.exe`.
-        
-    -   **Key**: a chave de configuração gerada na máquina alvo.
-        
-4.  Clique em **OK** para confirmar as configurações.
-    
-5.  Antes de reiniciar a máquina alvo, teste a conexão executando o seguinte comando no prompt da máquina hospedeira:
-    
-    ```
-    windbg -k net:port=51111,key=2steg4fzbj2sz.23418vzkd4ko3.1g34ou07z4pev.1sp3yo9yz874p
-    ```
-    
-6.  Se o WinDbg conectar com sucesso, reinicie a máquina alvo para iniciar a sessão de debug.
-    
+   ```
+   cd C:\KD
+   ```
 
-## 5. Conclusão
+4. Run the following command to check for supported network interfaces:
 
-Com a configuração do WinDbg via KDNET concluída, você agora dispõe de um ambiente funcional para depuração remota do Kernel. Essa configuração é extremamente útil para desenvolvimento, análise de falhas e estudo do funcionamento interno do sistema operacional. 
+   ```
+   kdnet.exe
+   ```
+
+   - This displays the NICs supported by KDNET.
+
+5. Start network debugging, replacing `[host_ip]` with the host machine's IP address and `[port]` with the desired port:
+
+   ```
+   kdnet.exe [host_ip] [port]
+   ```
+
+   **Example:**
+
+   ```
+   kdnet.exe 192.168.2.1 51111
+   ```
+
+6. If the command succeeds, a configuration key similar to the following will be displayed:
+
+   ```
+   Key=2steg4fzbj2sz.23418vzkd4ko3.1g34ou07z4pev.1sp3yo9yz874p
+   ```
+
+   This key will be used to configure the connection in WinDbg.
+
+## 4. Testing the Debugging Connection
+
+Now that the configuration key has been generated on the target machine, configure WinDbg on the host machine to establish a connection to the target machine's kernel.
+
+### Steps
+
+1. Open **WinDbg** on the host machine.
+2. Press **CTRL + K** to open the Kernel Debugging configuration window.
+3. On the **NET** tab, enter:
+
+   - **Port Number**: the port specified in the `kdnet.exe` command.
+   - **Key**: the configuration key generated on the target machine.
+
+4. Click **OK** to confirm the settings.
+5. Before restarting the target machine, test the connection by running the following command in the host machine's command prompt:
+
+   ```
+   windbg -k net:port=51111,key=2steg4fzbj2sz.23418vzkd4ko3.1g34ou07z4pev.1sp3yo9yz874p
+   ```
+
+6. If WinDbg connects successfully, restart the target machine to start the debugging session.
+
+## 5. Conclusion
+
+With WinDbg configured through KDNET, you now have a working remote kernel debugging environment. This setup is extremely useful for development, crash analysis, and studying the inner workings of the operating system.
